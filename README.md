@@ -21,33 +21,51 @@ Every release, you need to write "What's New" text — in multiple languages. Us
 
 **@shipapp/changelog** automates steps 1-2, and integrates with [@shipapp/metadata](https://github.com/doxiaoyu666/shipapp-metadata) for step 3-4.
 
+## How It Works
+
+This tool reads the **git commit history of your own app project** (e.g., your iOS app repo) and automatically generates user-friendly "What's New" release notes. You don't need to write anything manually — your commit messages are the input.
+
+```
+Your App Repo (git commits)  →  AI rewrites  →  Multilingual What's New  →  App Store Connect
+```
+
+**Prerequisites:**
+- Your app project must be a git repository
+- Write meaningful commit messages (they become the raw material for release notes)
+- Works with both [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`) and regular commit messages
+
 ## Quick Start
 
-### Option A: Claude Code (Recommended)
+### Step 1: Install the tool
 
 ```bash
 git clone https://github.com/doxiaoyu666/shipapp-changelog.git
 cd shipapp-changelog
 npm install && npm run build
+```
 
-# In Claude Code, from your app's project directory:
+### Step 2: Use it in your app project
+
+#### Option A: Claude Code (Recommended)
+
+```bash
+# Go to YOUR APP's project directory (not this tool's directory)
+cd ~/git/my-ios-app
+
+# Run the skill
 /changelog MyApp
 ```
 
-The skill reads your git history, generates user-friendly What's New in 8 languages, and optionally uploads to App Store Connect.
+The skill reads **your app's git history**, generates user-friendly What's New in 8 languages, and optionally uploads to App Store Connect.
 
-### Option B: CLI
+#### Option B: CLI
 
 ```bash
-git clone https://github.com/doxiaoyu666/shipapp-changelog.git
-cd shipapp-changelog
-npm install && npm run build
+# Point --cwd to YOUR APP's git repository
+shipapp-changelog log --cwd ~/git/my-ios-app
 
-# View commit history grouped by type
-shipapp-changelog log --cwd ~/git/my-app
-
-# Generate What's New JSON
-shipapp-changelog generate --cwd ~/git/my-app --output ./whats_new
+# Generate What's New JSON from your app's commits
+shipapp-changelog generate --cwd ~/git/my-ios-app --output ./whats_new
 
 # Then push to App Store Connect
 shipapp-metadata push --app "MyApp" --dir ./whats_new --only whats_new
@@ -137,33 +155,51 @@ MIT
 
 **@shipapp/changelog** 自动化步骤 1-2，并与 [@shipapp/metadata](https://github.com/doxiaoyu666/shipapp-metadata) 集成完成步骤 3-4。
 
+## 工作原理
+
+这个工具读取**你自己的 App 项目的 git commit 历史**（比如你的 iOS 项目仓库），自动生成用户友好的「新功能」文案。你不需要手动写任何内容——你的 commit message 就是输入。
+
+```
+你的 App 仓库（git commits）→ AI 改写 → 多语言「新功能」→ App Store Connect
+```
+
+**前提条件：**
+- 你的 App 项目必须是一个 git 仓库
+- commit message 要有意义（它们是生成文案的原材料）
+- 支持 [Conventional Commits](https://www.conventionalcommits.org/)（`feat:`、`fix:`）和普通 commit message
+
 ## 快速开始
 
-### 方式一：Claude Code（推荐）
+### 第一步：安装工具
 
 ```bash
 git clone https://github.com/doxiaoyu666/shipapp-changelog.git
 cd shipapp-changelog
 npm install && npm run build
+```
 
-# 在 Claude Code 中，在你的 app 项目目录下：
+### 第二步：在你的 App 项目中使用
+
+#### 方式一：Claude Code（推荐）
+
+```bash
+# 进入你自己的 App 项目目录（不是这个工具的目录）
+cd ~/git/my-ios-app
+
+# 运行 skill
 /changelog 我的App
 ```
 
-Skill 读取 git 历史，生成 8 种语言的用户友好「新功能」，确认后上传到 App Store Connect。
+Skill 读取**你的 App 的 git 历史**，生成 8 种语言的用户友好「新功能」，确认后上传到 App Store Connect。
 
-### 方式二：CLI
+#### 方式二：CLI
 
 ```bash
-git clone https://github.com/doxiaoyu666/shipapp-changelog.git
-cd shipapp-changelog
-npm install && npm run build
+# --cwd 指向你自己的 App 的 git 仓库
+shipapp-changelog log --cwd ~/git/my-ios-app
 
-# 查看按类型分组的 commit 历史
-shipapp-changelog log --cwd ~/git/my-app
-
-# 生成 What's New JSON
-shipapp-changelog generate --cwd ~/git/my-app --output ./whats_new
+# 从你的 App 的 commit 历史生成 What's New
+shipapp-changelog generate --cwd ~/git/my-ios-app --output ./whats_new
 
 # 推送到 App Store Connect
 shipapp-metadata push --app "我的App" --dir ./whats_new --only whats_new
