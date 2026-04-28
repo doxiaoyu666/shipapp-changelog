@@ -1,0 +1,34 @@
+{
+  "name": "@shipapp/changelog",
+  "version": "0.1.0",
+  "description": "Generate multilingual What's New from git commits for App Store Connect.",
+  "main": "dist/cli.js",
+  "bin": {
+    "shipapp-changelog": "dist/cli.js",
+    "shipapp-changelog-mcp": "dist/mcp.js"
+  },
+  "scripts": {
+    "build": "esbuild src/cli.ts --bundle --platform=node --target=node18 --outfile=dist/cli.js --format=cjs --banner:js='#!/usr/bin/env node' && esbuild src/mcp/server.ts --bundle --platform=node --target=node18 --outfile=dist/mcp.js --format=cjs --banner:js='#!/usr/bin/env node'",
+    "dev": "tsx src/cli.ts",
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "keywords": ["app-store-connect", "changelog", "whats-new", "ios", "cli"],
+  "author": "",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "ora": "^5.4.1",
+    "yargs": "^17.7.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/yargs": "^17.0.0",
+    "esbuild": "^0.20.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^4.1.5"
+  }
+}
